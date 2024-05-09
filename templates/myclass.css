@@ -1,0 +1,7 @@
+.background-image {
+    background-image: url("C:\Users\hp\PycharmProjects\pythonProject2\assets\Board-Stewardship-Wak-up-and-Stay-Ahead-of-the-Curve.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 20px;  /* Adjust padding as needed */
+}

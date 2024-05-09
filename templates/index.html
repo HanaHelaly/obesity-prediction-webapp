@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obesity Level Prediction</title>
+    <!-- Add any necessary CSS styles or links to frameworks here -->
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Obesity Level Prediction</h1>
+    
+    <form id="prediction-form">
+        <!-- Input field for Smoke -->
+        <label for="smoke">Smoke:</label>
+        <select id="smoke" name="SMOKE">
+            <option value="yes">yes</option>
+            <option value="no">no</option>
+        </select><br>
+
+        <!-- Input fields for other features -->
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" name="Weight" step="1" min="0"><br>
+        
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="Age"><br>
+        
+        <label for="height">Height:</label>
+        <input type="number" id="height" name="Height" step="1" min="0"><br>
+        
+        <label for="gender">Gender:</label>
+        <select id="gender" name="Gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br>
+        
+        <label for="family_history">Family history with overweight:</label>
+        <select id="family_history" name="family_history_with_overweight">
+            <option value="yes">yes</option>
+            <option value="no">no</option>
+        </select><br>
+        
+        <label for="favc">Frequent consumption of high-caloric food items:</label>
+        <select id="favc" name="FAVC">
+            <option value="yes">yes</option>
+            <option value="no">no</option>
+        </select><br>
+        
+        <label for="fcvc">Frequency of consuming vegetables:</label>
+        <input type="number" id="fcvc" name="FCVC" step="0.1" min="0"><br>
+        
+        <label for="ncp">Number of main meals consumed per day:</label>
+        <input type="number" id="ncp" name="NCP" step="0.1" min="0"><br>
+        
+        <label for="caec">Frequency of consuming food between meals:</label>
+        <select id="caec" name="CAEC">
+            <option value="Sometimes">Sometimes</option>
+            <option value="no">no</option>
+            <option value="Frequently">Frequently</option>
+            <option value="Always">Always</option>
+        </select><br>
+        
+        <label for="ch2o">Amount of water consumed daily:</label>
+        <input type="number" id="ch2o" name="CH2O" step="0.1" min="0"><br>
+        
+        <label for="calc">Frequency of alcohol consumption:</label>
+        <select id="calc" name="CALC">
+            <option value="Sometimes">Sometimes</option>
+            <option value="no">no</option>
+            <option value="Frequently">Frequently</option>
+        </select><br>
+        
+        <label for="scc">Monitoring of calorie consumption:</label>
+        <select id="scc" name="SCC">
+            <option value="yes">yes</option>
+            <option value="no">no</option>
+        </select><br>
+        
+        <label for="faf">Frequency of engaging in physical activity:</label>
+        <input type="number" id="faf" name="FAF" step="0.1" min="0"><br>
+        
+        <label for="tue">Time spent using technology devices:</label>
+        <input type="number" id="tue" name="TUE" step="0.1" min="0"><br>
+        
+        <label for="mtrans">Mode of transportation used:</label>
+        <select id="mtrans" name="MTRANS">
+            <option value="Automobile">Automobile</option>
+            <option value="Bike">Bike</option>
+            <option value="Motorbike">Motorbike</option>
+            <option value="Public_Transportation">Public Transportation</option>
+            <option value="Walking">Walking</option>
+        </select><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="prediction-result">
+        <!-- Display prediction result here -->
+    </div>
+
+    <!-- Add any necessary JavaScript scripts or links to frameworks here -->
+    <script>
+        // Add JavaScript code for handling form submission and prediction result display
+        const form = document.getElementById('prediction-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Send data to backend for prediction
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Display prediction result
+                const predictionResultElement = document.getElementById('prediction-result');
+                predictionResultElement.innerHTML = `Predicted obesity level: ${result.obesity_level}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
